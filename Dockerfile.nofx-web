@@ -1,0 +1,8 @@
+FROM ghcr.io/nofxaios/nofx/nofx-frontend:latest
+
+RUN mkdir -p /etc/nginx/templates \
+    && grep -q 'http://nofx:8080' /etc/nginx/conf.d/default.conf \
+    && sed 's|http://nofx:8080|http://${NOFX_BACKEND_HOST}:8080|g' \
+       /etc/nginx/conf.d/default.conf \
+       > /etc/nginx/templates/default.conf.template \
+    && rm /etc/nginx/conf.d/default.conf
