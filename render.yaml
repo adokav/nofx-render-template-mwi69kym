@@ -42,7 +42,7 @@ projects:
               - key: DATA_ENCRYPTION_KEY
                 generateValue: true
 
-          - type: web
+                    - type: web
             name: nofx-web
             runtime: image
             plan: starter
@@ -50,4 +50,13 @@ projects:
             image:
               url: ghcr.io/nofxaios/nofx/nofx-frontend:latest
             healthCheckPath: /health
+            autoDeployTrigger: off
+            envVars:
+              - key: NOFX_BACKEND_HOST
+                fromService:
+                  name: nofx
+                  type: pserv
+                  property: host
+            dockerCommand: >-
+              /bin/sh -c 'sed -i "s#http://nofx:8080#http://${NOFX_BACKEND_HOST}:8080#g" /etc/nginx/conf.d/default.conf && exec nginx -g "daemon off;"'/health
             autoDeployTrigger: off
