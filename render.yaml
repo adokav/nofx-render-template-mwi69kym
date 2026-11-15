@@ -38,7 +38,7 @@ projects:
               - key: DATA_ENCRYPTION_KEY
                 generateValue: true
 
-          -type: web
+          - type: web
             name: nofx-web
             runtime: docker
             dockerfilePath: ./Dockerfile.nofx-web
